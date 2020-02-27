@@ -950,11 +950,7 @@ while choice!=3: #Mientras la opción elegida por el usuario no sea 'Salir', el 
                  
              plt.plot([0]+tmo,[0]+CIoMin, color='m', linestyle='--')
              plt.axhline(y=0, color='r', linestyle='-')
-             print("len(tmo):",len(tmo))
-             print("len(CIo):",len(CIo))
              plt.plot([0]+tmo,[0]+CIo,"-",color='b')
-             print("len(tmss):",len(tmss))
-             print("len(CIss):",len(CIss))
              plt.plot([0]+tmss,[0]+CIss,'.', color='r')
              plt.xlabel('Minutes (m)')
              plt.ylabel('Compound Interest')
