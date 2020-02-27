@@ -26,7 +26,7 @@ while choice!=3: #Mientras la opción elegida por el usuario no sea 'Salir', el 
     lp=1 # 'LaborPrice' Precio mínimo hora de trabajo en Colombia (USD$0.92 Hora SMMLV(COL))
     lps=-0.03 # 'LossPerSesion' Proporción de pérdida máxima por operación.
     pps=0.06 #'ProfitPerSesion' Proporción de ganancia máxima por operación.
-    CIotmi=20#'CompoundInterestTimeMinuteInitial' Momento en el tiempo expresado en minutos a partir del cual se realiza el cálculo del Interés Compuesto, a valores más cercanos a (0), mayor será la fluctuación y la amplitud del nivel de interés compuesto en la gráfica. 
+    CIotmi=15#'CompoundInterestTimeMinuteInitial' Momento en el tiempo expresado en minutos a partir del cual se realiza el cálculo del Interés Compuesto, a valores más cercanos a (0), mayor será la fluctuación y la amplitud del nivel de interés compuesto en la gráfica. 
     pts=3#'ProcessingTimeSecond' Parámetro que proporciona el tiempo máximo que está dispuesto el usuario a esperar para realizar correctamente la iteración para el cálculo de 'm' o el número de operaciones esperadas hasta quemar la cuenta.
     ipo=1#'InvestimentPerOperation' Parámetro de cantidad mínima invertida en dólares en cada operación UNITARIA por marco temporal.
     request="none" #Petición que realiza el usuario dentro de un registro de datos.
@@ -340,9 +340,9 @@ while choice!=3: #Mientras la opción elegida por el usuario no sea 'Salir', el 
                              if(tmo[i]<CIotmi):
                                  #Cuando no haya pasado aún el 'AntiNoiseTime' el tiempo para limpiar el ruido de la variable CIo en los primeros segundo de operación en todo el registro, no se realizarán cálculos para el interés compuesto debido altos niveles de fluctuación de la variable en este rango de tiempo seleccionado por el usuario.
                                  CIo.append(0.0)
-                             if(tmo[n-1]>=CIotmi):
+                             if(tmo[i]>=CIotmi):
                                  try:
-                                     CIo.append((1+Ro[i])**(60/tmo[i-1])-1)
+                                     CIo.append((1+Ro[i])**(60/tmo[i])-1)
                                  except:
                                      CIo.append(max(CIo))
                          Cof=Co[n-1]
@@ -950,7 +950,11 @@ while choice!=3: #Mientras la opción elegida por el usuario no sea 'Salir', el 
                  
              plt.plot([0]+tmo,[0]+CIoMin, color='m', linestyle='--')
              plt.axhline(y=0, color='r', linestyle='-')
-             plt.plot([0]+tmo,[0]+CIo,color='b')
+             print("len(tmo):",len(tmo))
+             print("len(CIo):",len(CIo))
+             plt.plot([0]+tmo,[0]+CIo,"-",color='b')
+             print("len(tmss):",len(tmss))
+             print("len(CIss):",len(CIss))
              plt.plot([0]+tmss,[0]+CIss,'.', color='r')
              plt.xlabel('Minutes (m)')
              plt.ylabel('Compound Interest')
